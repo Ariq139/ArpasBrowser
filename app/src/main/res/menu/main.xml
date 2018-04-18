@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_new"
+        android:orderInCategory="100"
+        android:title="New Window"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_new_untrack"
+        android:orderInCategory="100"
+        android:title="New Untracked Window"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/nav_downloads"
+        android:title="Downloads" />
+    <item
+        android:id="@+id/nav_history"
+        android:title="History" />
+    <item
+        android:id="@+id/nav_manage"
+        android:title="Settings" />
+</menu>
