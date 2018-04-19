@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity
         if (uri != null) {
             webview1.loadUrl(uri.toString());
         }
+        else if (!uri.toString().startsWith("http://") || !uri.toString().startsWith("https://")) {
+            webview1.loadUrl(uri.toString());
+        }
     }
 
     @Override
