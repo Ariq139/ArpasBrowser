@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
         webview1.loadUrl("https://www.duckduckgo.com/");
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Uri uri = intent.getData();
         if (uri != null) {
             webview1.loadUrl(uri.toString());
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         else if (!uri.toString().startsWith("http://") || !uri.toString().startsWith("https://")) {
             webview1.loadUrl(uri.toString());
         }
+        else*/
     }
 
     @Override
