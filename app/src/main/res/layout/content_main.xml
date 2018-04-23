@@ -8,7 +8,7 @@
     tools:context="com.arpas.arpasbrowser.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <WebView
+    <im.delight.android.webview.AdvancedWebView
         android:id="@+id/webview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
