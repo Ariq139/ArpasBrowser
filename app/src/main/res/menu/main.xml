@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_new"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="New Window"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_new_untrack"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="New Untracked Window"
         app:showAsAction="never" />
     <item
         android:id="@+id/nav_downloads"
+        android:orderInCategory="4"
         android:title="Downloads" />
     <item
         android:id="@+id/nav_history"
+        android:orderInCategory="3"
         android:title="History" />
     <item
         android:id="@+id/nav_manage"
+        android:orderInCategory="5"
         android:title="Settings" />
 </menu>

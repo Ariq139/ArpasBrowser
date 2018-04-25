@@ -1,6 +1,8 @@
 package com.arpas.arpasbrowser;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,8 +19,13 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.LinkedList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private final LinkedList<String> WebTitleList = new LinkedList<>();
+    private final LinkedList<Bitmap> WebIconList = new LinkedList<>();
+    //private final LinkedList<String> WebURLList = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,12 @@ public class MainActivity extends AppCompatActivity
         WebView webview1 = findViewById(R.id.webview1);
         setSupportActionBar(toolbar);
 
+        for (int i = 0; i < 20; i++) {
+            WebTitleList.addLast("Title " + i+1);
+            //WebURLList.addLast("URL " + i+1);
+            //WebIconList.addLast();
+            //Log.d("WordList", mWordList.getLast());
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -87,9 +100,15 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new) {
+            int WebTitleList_size = WebTitleList.size();
+            WebTitleList.addLast("Title " +WebTitleList_size);
+
             return true;
         }
         else if (id == R.id.action_new_untrack) {
+            int WebTitleList_size = WebTitleList.size();
+            WebTitleList.addLast("Title Untracked " +WebTitleList_size);
+
             return true;
         }
 
@@ -103,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_downloads) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_manage) {
