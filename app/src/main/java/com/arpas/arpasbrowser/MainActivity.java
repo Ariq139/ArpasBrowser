@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,14 +19,46 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebHistoryItem;
+
+import com.arpas.arpasbrowser.recyclers.HistoryList;
 
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private final LinkedList<String> WebTitleList = new LinkedList<>();
-    private final LinkedList<Bitmap> WebIconList = new LinkedList<>();
+    //private final LinkedList<String> WebTitleList = new LinkedList<>();
+    //private final LinkedList<Bitmap> WebIconList = new LinkedList<>();
     //private final LinkedList<String> WebURLList = new LinkedList<>();
+    private final LinkedList<HistoryList> mHistoryList = new LinkedList<>();
+
+    final WebHistoryItem item = new WebHistoryItem() {
+        @Override
+        public String getUrl() {
+            return null;
+        }
+
+        @Override
+        public String getOriginalUrl() {
+            return null;
+        }
+
+        @Override
+        public String getTitle() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public Bitmap getFavicon() {
+            return null;
+        }
+
+        @Override
+        protected WebHistoryItem clone() {
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +68,6 @@ public class MainActivity extends AppCompatActivity
         WebView webview1 = findViewById(R.id.webview1);
         setSupportActionBar(toolbar);
 
-        for (int i = 0; i < 20; i++) {
-            WebTitleList.addLast("Title " + i+1);
-            //WebURLList.addLast("URL " + i+1);
-            //WebIconList.addLast();
-            //Log.d("WordList", mWordList.getLast());
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,19 +127,19 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new) {
-            int WebTitleList_size = WebTitleList.size();
-            WebTitleList.addLast("Title " +WebTitleList_size);
 
             return true;
         }
         else if (id == R.id.action_new_untrack) {
-            int WebTitleList_size = WebTitleList.size();
-            WebTitleList.addLast("Title Untracked " +WebTitleList_size);
 
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onPageStarted(String url, Bitmap favicon) {
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -124,6 +151,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_downloads) {
 
         } else if (id == R.id.nav_history) {
+            Intent intent = new Intent(MainActivity.this, BrowserHistory.class);
+            intent.putExtra("list",mHistoryList);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
 
