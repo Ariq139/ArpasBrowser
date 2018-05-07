@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         webview1.loadUrl("https://www.duckduckgo.com/");
 
+
         /*Intent intent = getIntent();
         Uri uri = intent.getData();
         if (uri != null) {
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void onPageStarted(String url, Bitmap favicon) {
+    public void onPageStarted(String url, String title) {//, Bitmap favicon) {
 
     }
 
