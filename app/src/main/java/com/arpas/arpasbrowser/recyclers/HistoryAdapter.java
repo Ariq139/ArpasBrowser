@@ -1,7 +1,6 @@
 package com.arpas.arpasbrowser.recyclers;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +46,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
 
     @Override
     public HistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mItemView = mInflater.inflate(R.layout.history_item, parent, false);
+        View mItemView = mInflater.inflate(R.layout.general_item, parent, false);
         return new HistoryHolder(mItemView, this);
     }
 

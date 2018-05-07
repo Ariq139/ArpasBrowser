@@ -23,9 +23,9 @@ public class BrowserHistory extends AppCompatActivity{
         setContentView(R.layout.history_layout);
 
         Intent intent = getIntent();
-        LinkedList<HistoryList> mHistoryList = intent.getExtras("list");
+        LinkedList<HistoryList> mHistoryList = (LinkedList<HistoryList>) intent.getSerializableExtra("list");
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        mRecyclerView = findViewById(R.id.recyclerview);
         // Create an adapter and supply the data to be displayed.
         // mAdapter = new WordListAdapter(this, mWordList, mWord2List, mImageList);
         mAdapter = new HistoryAdapter(this, mHistoryList);
