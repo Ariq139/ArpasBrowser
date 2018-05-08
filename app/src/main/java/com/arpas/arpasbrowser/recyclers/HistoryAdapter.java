@@ -1,6 +1,7 @@
 package com.arpas.arpasbrowser.recyclers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
             super(itemView);
             WebNameView =  itemView.findViewById(R.id.word);
             WebLinkView =  itemView.findViewById(R.id.word2);
-            //WebFaviconView = itemView.findViewById(R.id.favicon);
+            //WebFaviconView = itemView.findViewById(R.id.imageView);
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);
         }
@@ -57,11 +58,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
         // Add the data to the view holder.
         holder.WebNameView.setText(mCurrent.WebName);
         holder.WebLinkView.setText(mCurrent.WebLink);
-        //holder.WebFaviconView.setImageBitmap(mCurrent.WebFavicon);
+        //holder.WebFaviconView.set(mCurrent.WebFavicon);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mHistoryList.size();
     }
 }

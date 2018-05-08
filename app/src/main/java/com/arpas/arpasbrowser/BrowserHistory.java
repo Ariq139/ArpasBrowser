@@ -17,13 +17,14 @@ public class BrowserHistory extends AppCompatActivity{
 
     private RecyclerView mRecyclerView;
     private HistoryAdapter mAdapter;
+    public LinkedList<HistoryList> mHistoryList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_layout);
 
         Intent intent = getIntent();
-        LinkedList<HistoryList> mHistoryList = (LinkedList<HistoryList>) intent.getSerializableExtra("list");
+        //mHistoryList = (LinkedList<HistoryList>) intent.getSerializableExtra("list");
 
         mRecyclerView = findViewById(R.id.recyclerview);
         // Create an adapter and supply the data to be displayed.

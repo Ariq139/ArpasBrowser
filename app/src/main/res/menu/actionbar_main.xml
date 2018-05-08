@@ -12,15 +12,15 @@
         android:title="New Untracked Window"
         app:showAsAction="never" />
     <item
-        android:id="@+id/nav_downloads"
+        android:id="@+id/action_downloads"
         android:orderInCategory="4"
         android:title="Downloads" />
     <item
-        android:id="@+id/nav_history"
+        android:id="@+id/action_history"
         android:orderInCategory="3"
         android:title="History" />
     <item
-        android:id="@+id/nav_manage"
+        android:id="@+id/action_manage"
         android:orderInCategory="5"
         android:title="Settings" />
 </menu>
