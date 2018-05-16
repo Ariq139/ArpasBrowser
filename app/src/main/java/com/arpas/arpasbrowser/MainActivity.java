@@ -28,7 +28,7 @@ import im.delight.android.webview.AdvancedWebView;
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdvancedWebView.Listener{
-    private final LinkedList<HistoryList> mHistoryList = new LinkedList<>();
+    private final LinkedList<HistoryList> mHistoryList = new LinkedList<HistoryList>();
     private AdvancedWebView webview1;
 
     String loadedUrl; // for loadUrl
@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webview1.getSettings().setJavaScriptEnabled(true);
         webview1.setVerticalScrollBarEnabled(false); //hide vertical scrollbar
         webview1.setHorizontalScrollBarEnabled(false); //hide horizontal scrollbar
+        if (webview1.getUrl()==null || webview1.getUrl()=="about:blank"){
+            webview1.loadUrl("https://www.duckduckgo.com");
+        }
+        else {
+            webview1.loadUrl(webview1.getUrl());
+        }
 
         /* for fragment
 

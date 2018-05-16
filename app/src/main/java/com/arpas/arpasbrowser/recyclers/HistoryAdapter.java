@@ -41,8 +41,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
     }
 
     public HistoryAdapter(Context context, LinkedList<HistoryList> mHistoryList) {
-        mInflater = LayoutInflater.from(context);
         this.mHistoryList=mHistoryList;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -63,6 +63,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
 
     @Override
     public int getItemCount() {
-        return mHistoryList.size();
+        if (mHistoryList == null){
+            return 0;
+        }
+        else{
+            return mHistoryList.size();
+        }
     }
 }
