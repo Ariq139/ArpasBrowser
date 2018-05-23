@@ -12,6 +12,8 @@ import com.arpas.arpasbrowser.R;
 
 import java.util.LinkedList;
 
+import com.arpas.arpasbrowser.MainActivity.*;
+
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryHolder>  {
 
     private final LinkedList<HistoryList> mHistoryList;

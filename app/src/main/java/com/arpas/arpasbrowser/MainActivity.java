@@ -6,6 +6,7 @@ package com.arpas.arpasbrowser;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,12 +28,13 @@ import im.delight.android.webview.AdvancedWebView;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdvancedWebView.Listener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdvancedWebView.Listener, java.io.Serializable{
     private final LinkedList<HistoryList> mHistoryList = new LinkedList<HistoryList>();
-    private AdvancedWebView webview1;
+    public AdvancedWebView webview1;
 
     String loadedUrl; // for loadUrl
     int loadUrlTimeout = 0;
+    static String PREF_NAME;
 
     // private BrowserHistory BHis;
     // public WebHistoryItem WHItem;
@@ -105,110 +107,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-    /*
-    public void loadUrl(String url) {
-        if (url.equals("about:blank") || url.startsWith("javascript:")) {
-            this.loadUrlNow(url);
-        }
-        else {
-            this.loadUrlIntoView(url);
-        }
-    }
-
-    @Deprecated
-    public void loadUrl(final String url, int time) {
-        if(url == null)
-        {
-            this.loadUrlIntoView("https://www.duckduckgo.com");
-        }
-        else
-        {
-            this.loadUrlIntoView(url);
-        }
-    }
-
-    public void loadUrlIntoView(final String url) {
-        loadUrlIntoView(url, true);
-    }
-
-
-    public void loadUrlIntoView(final String url, boolean recreatePlugins) {
-
-
-        // Create a timeout timer for loadUrl
-        final MainActivity me = this;
-        final int currentLoadUrlTimeout = me.loadUrlTimeout;
-        final int loadUrlTimeoutValue = Integer.parseInt(this.getProperty("LoadUrlTimeoutValue", "20000"));
-
-        // Timeout error method
-        final Runnable loadError = new Runnable() {
-            public void run() {
-                me.stopLoading();
-                LOG.e(TAG, "CordovaWebView: TIMEOUT ERROR!");
-                if (viewClient != null) {
-                    viewClient.onReceivedError(me, -6, "The connection to the server was unsuccessful.", url);
-                }
-            }
-        };
-
-        // Timeout timer method
-        final Runnable timeoutCheck = new Runnable() {
-            public void run() {
-                try {
-                    synchronized (this) {
-                        wait(loadUrlTimeoutValue);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                // If timeout, then stop loading and handle error
-                if (me.loadUrlTimeout == currentLoadUrlTimeout) {
-                    me.cordova.getActivity().runOnUiThread(loadError);
-                }
-            }
-        };
-
-        // Load url
-        this.cordova.getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                cordova.getThreadPool().execute(timeoutCheck);
-                me.loadUrlNow(url);
-            }
-        });
-    }
-
-    void loadUrlNow(String url) {
-        if (LOG.isLoggable(LOG.DEBUG) && !url.startsWith("javascript:")) {
-            LOG.d(TAG, ">>> loadUrlNow()");
-        }
-        if (url.startsWith("file://") || url.startsWith("javascript:") || url.startsWith("about:") || internalWhitelist.isUrlWhiteListed(url)) {
-            super.loadUrl(url);
-        }
-    }
-
-    public void loadUrlIntoView(final String url, final int time) {
-
-        // If not first page of app, then load immediately
-        // Add support for browser history if we use it.
-        if ((url.startsWith("javascript:")) || this.canGoBack()) {
-        }
-
-        // If first page, then show splashscreen
-        else {
-
-            LOG.d(TAG, "loadUrlIntoView(%s, %d)", url, time);
-        }
-
-        // Load url
-        this.loadUrlIntoView(url);
-    }
-
-    public void stopLoading() {
-        viewClient.isCurrentlyLoading = false;
-        super.stopLoading();
-    }*/
-
 
 
     //ADVANCEDWEBVIEW OVERRIDE - BEGIN//
@@ -244,8 +142,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
-        HistoryList list = new HistoryList("Title",url);
-        mHistoryList.addFirst(list);
+        SharedPreferences preferences = getSharedPreferences(PREF_NAME,0);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("LoadedURL",url);
+        editor.commit();
+        //HistoryList list = new HistoryList("Title",url);
+        //mHistoryList.addFirst(list);
         // Toast.makeText(this, "TEST", Toast.LENGTH_LONG).show();
     }
 
@@ -311,20 +214,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.action_history) {
             Intent intent = new Intent(MainActivity.this, BrowserHistory.class);
-            //intent.putExtra("list", mHistoryList);
+            intent.putExtra("list", mHistoryList);
             startActivity(intent);
+            mHistoryList.clear();
             return true;
         }
         else if (id == R.id.action_downloads) {
             Intent intent = new Intent(MainActivity.this, BrowserDownload.class);
-            //intent.putExtra("list", mHistoryList);
             startActivity(intent);
-        }
-        else if (id == R.id.action_history) {
-            Intent intent = new Intent(MainActivity.this, BrowserHistory.class);
-            //intent.putExtra("list", mHistoryList);
-            startActivity(intent);
-
         }
         else if (id == R.id.action_manage) {
             Intent intent = new Intent(MainActivity.this, BrowserSetting.class);
