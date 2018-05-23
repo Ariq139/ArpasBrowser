@@ -51,6 +51,8 @@
 
         <activity android:name=".BrowserHistory" android:label="History"></activity>
 
+        <activity android:name=".GoToAddress" android:label="History"></activity>
+
         <activity android:name=".BrowserBookmark" android:label="Bookmark"></activity>
 
         <activity android:name=".BrowserDownload" android:label="Downloads"></activity>

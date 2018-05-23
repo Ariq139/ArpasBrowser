@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import im.delight.android.webview.AdvancedWebView;
+
 import static com.arpas.arpasbrowser.MainActivity.PREF_NAME;
 
 public class BrowserHistory extends AppCompatActivity implements java.io.Serializable{
@@ -27,11 +29,12 @@ public class BrowserHistory extends AppCompatActivity implements java.io.Seriali
     private HistoryAdapter mAdapter;
     public LinkedList<HistoryList> mHistoryList;
     public ArrayList<HistoryList> mHistoryArrayList;
+    public AdvancedWebView webview1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_layout);
-
+        webview1 = findViewById(R.id.webview1);
         if (ListInit()==false){
             mHistoryList = new LinkedList<>();
             mHistoryArrayList = new ArrayList<>(mHistoryList);
@@ -64,7 +67,7 @@ public class BrowserHistory extends AppCompatActivity implements java.io.Seriali
         SharedPreferences preferences = getSharedPreferences(PREF_NAME, 0);
 
         String LoadedURL = preferences.getString("LoadedURL", "");
-        HistoryList list = new HistoryList("Title",LoadedURL);
+        HistoryList list = new HistoryList(webview1.getTitle(),LoadedURL);
         mHistoryList.addFirst(list);
         mHistoryArrayList.add(list);
 

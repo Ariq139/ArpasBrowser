@@ -14,8 +14,11 @@ import java.util.LinkedList;
 
 import com.arpas.arpasbrowser.MainActivity.*;
 
+import im.delight.android.webview.AdvancedWebView;
+
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryHolder>  {
 
+    public AdvancedWebView webview1;
     private final LinkedList<HistoryList> mHistoryList;
 
     private final LayoutInflater mInflater;
@@ -26,6 +29,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryH
         public final TextView WebLinkView;
         //public final Bitmap WebFaviconView;
         final HistoryAdapter mAdapter;
+
+
 
         public HistoryHolder(View itemView, HistoryAdapter adapter) {
             super(itemView);

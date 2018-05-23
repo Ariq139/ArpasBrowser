@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebViewClient;
 import android.webkit.WebHistoryItem;
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String loadedUrl; // for loadUrl
     int loadUrlTimeout = 0;
     static String PREF_NAME;
+    public	static	final	String	EXTRA_MESSAGE	=
+            "com.arpas.arpasbrowser.extra.message";
+
+    public	static	final	int	TEXT_REQUEST	=	1;
 
     // private BrowserHistory BHis;
     // public WebHistoryItem WHItem;
@@ -51,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webview1.getSettings().setJavaScriptEnabled(true);
         webview1.setVerticalScrollBarEnabled(false); //hide vertical scrollbar
         webview1.setHorizontalScrollBarEnabled(false); //hide horizontal scrollbar
-        if (webview1.getUrl()==null || webview1.getUrl()=="about:blank"){
+        if (webview1.getUrl()==null || webview1.getUrl()=="about:blank" || savedInstanceState == null){
             webview1.loadUrl("https://www.duckduckgo.com");
         }
         else {
-            webview1.loadUrl(webview1.getUrl());
+            webview1.loadUrl(savedInstanceState.getString("url"));
         }
 
         /* for fragment
@@ -108,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        webview1.loadUrl(savedInstanceState.getString("url"));
+    }
 
     //ADVANCEDWEBVIEW OVERRIDE - BEGIN//
     @SuppressLint("NewApi")
@@ -137,13 +147,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         webview1.onActivityResult(requestCode, resultCode, intent);
-        // ...
+        if	(requestCode	==	TEXT_REQUEST)	{
+            if	(resultCode	==	RESULT_OK) {
+                String reply = intent.getStringExtra(GoToAddress.EXTRA_REPLY);
+                webview1.loadUrl(reply);
+            }
+        }
     }
 
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
         SharedPreferences preferences = getSharedPreferences(PREF_NAME,0);
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor =preferences.edit();
 
         editor.putString("LoadedURL",url);
         editor.commit();
@@ -212,11 +227,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             return true;
         }
+
+        else if (id == R.id.reload) {
+            webview1.loadUrl(webview1.getUrl());
+            return true;
+        }
+
+        else if (id == R.id.gotoaddress) {
+            Intent intent = new	Intent(this,	GoToAddress.class);
+            startActivityForResult(intent,	TEXT_REQUEST);
+            return true;
+        }
         else if (id == R.id.action_history) {
             Intent intent = new Intent(MainActivity.this, BrowserHistory.class);
             intent.putExtra("list", mHistoryList);
             startActivity(intent);
-            mHistoryList.clear();
             return true;
         }
         else if (id == R.id.action_downloads) {
@@ -247,4 +272,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     //NAV - END//
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("url", webview1.getUrl());
+    }
 }
